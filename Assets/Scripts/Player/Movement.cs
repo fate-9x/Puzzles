@@ -21,6 +21,8 @@ public class Movement : MonoBehaviour
     private Vector3 cameraRight;
     private bool rotateBool = true;
 
+    [SerializeField] private Detector detector;
+
     private bool groundPlayer;
 
     void Start()
@@ -33,7 +35,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
 
-        Debug.Log("Grounded: " + characterController.isGrounded);
+        textPro.text = "Detector: " + detector.inPlace;
 
         if (characterController.isGrounded && direction.y < 0)
         {
@@ -58,20 +60,13 @@ public class Movement : MonoBehaviour
         // Rotar el personaje
         Vector2 secondaryThumbstick = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
 
-        if (secondaryThumbstick.x > 0.5f && rotateBool) // Si el thumbstick se mueve a la derecha
+        if (secondaryThumbstick.x > 0.5f) // Si el thumbstick se mueve a la derecha
         {
             transform.Rotate(0, rotation, 0); // Gira el personaje 45 grados a la derecha
-            rotateBool = false;
         }
-        else if (secondaryThumbstick.x < -0.5f && rotateBool) // Si el thumbstick se mueve a la izquierda
+        else if (secondaryThumbstick.x < -0.5f) // Si el thumbstick se mueve a la izquierda
         {
             transform.Rotate(0, -rotation, 0); // Gira el personaje 45 grados a la izquierda
-            rotateBool = false;
-        }
-
-        if (secondaryThumbstick.x == 0)
-        {
-            rotateBool = true;
         }
 
         cameraForward = mainCamera.transform.forward.normalized;
