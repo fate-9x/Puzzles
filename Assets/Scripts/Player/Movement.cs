@@ -25,6 +25,9 @@ public class Movement : MonoBehaviour
 
     private bool groundPlayer;
 
+    public Transform[] playerHead; // Asigna el transform de la cámara del jugador
+    public Transform fixedPosition; // La posición fija donde el jugador debe estar
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -34,6 +37,11 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        foreach (Transform head in playerHead)
+        {
+            head.position = new Vector3(fixedPosition.position.x, head.position.y, fixedPosition.position.z);
+        }
 
         textPro.text = "Detector: " + detector.inPlace;
 
